@@ -1,0 +1,40 @@
+﻿<div>
+    <h3>Swiftstride Clan</h3>
+    <div class="input-group">
+        <span class="input-group-addon">
+            <i class="fa fa-search"></i>
+        </span>
+        <input id="nameSearch" type="text" class="form-control" ng-model="vm.nameSearch" autofocus />
+    </div>
+    <div>
+        <button class="btn btn-default" type="button" ng-click="vm.nameSearch = null">Clear Search</button>
+        <button class="btn btn-default" type="button" ng-click="vm.clearDead()">Clear 'Dead'</button>
+        <!--<button class="btn btn-default" ng-click="vm.fullReset()">Full Reset</button>-->
+    </div>
+    <div>
+        <div class="text-danger" ng-repeat="error in vm.errors track by $index">
+            {{error}}
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-4 col-md-3 col-lg-3" ng-repeat="member in vm.members | filter: isRecent(member.character.lastModifiedDate) | characterFilter: vm.nameSearch | orderBy: 'character.lastModified' : true">
+                <div class="character-table">
+                    <div class="character-bust">
+                        <a ng-href="{{member.character.profileUrl}}" target="_blank"><img ng-src="{{member.character.bustUrl}}" /></a>
+                    </div>
+                    <div class="character-avatar">
+                        <img ng-src="{{member.character.thumbnailUrl}}" />
+                    </div>
+                    <div class="character-details">
+                        <h3>{{member.character.name}}</h3>
+                        <h4>{{member.character.level}} {{vm.races[member.character.race]}} {{member.character.spec.name}} {{vm.classes[member.character.class]}}</h4>
+                    </div>
+                    <div class="character-footer">
+                        <small>Last seen {{member.character.lastModifiedDate | date: 'yyyy-MM-dd'}}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
